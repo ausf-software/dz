@@ -145,6 +145,77 @@ void posl()
     std::cout << "Сумма: " << sum;
 }
 
+bool isCheot(int* a, int n)
+{
+    bool temp = true;
+    for (int i = 0; i < n; i++)
+    {
+        if (abs(a[i]) % 2 == 1) return false;
+    }
+    return temp;
+}
+
+void printMat(int**a, int n)
+{
+    for (int i = 0; i < n; i ++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            std::cout << a[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+/*5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 1 1 1 1
+*/
+void matrix()
+{
+    std::cout << "Дана квадратная матрица. Если строк, содержащих только четные элементы меньше, чем строк содержащих только нечетные элементы, то удвоить все элементы с четной суммой индексов и лежащих выше побочной диагонали" << std::endl;
+
+    int n;
+    std::cin >> n;
+    int** a = new int*[n];
+    for (int i = 0; i < n; i++)
+    {
+        a[i] = new int[n];
+        for (int j = 0; j < n; j++)
+        {
+            std::cin >> a[i][j];
+        }
+    }
+
+    int ch = 0;
+    int nch = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (isCheot(a[i], n)) ch++;
+        else nch++;
+    }
+
+    if (ch < nch)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (i + j < n - 1 && (i + j) % 2 == 0)
+                {
+                    a[i][j] *= 2;
+                }
+            }
+        }
+    }
+
+    printMat(a, n);
+
+    for (int i = 0; i < n; i++)
+    {
+        delete[]a[i];
+    }
+    delete[]a;
+}
+
 int main()
 {
     setlocale(LC_ALL, "RUS");
@@ -153,6 +224,7 @@ int main()
     std::cout << "2. массивы" << std::endl;
     std::cout << "3. Функции" << std::endl;
     std::cout << "4. последовательности" << std::endl;
+    std::cout << "5. матрица" << std::endl;
 
     int number;
     std::cin >> number;
@@ -170,6 +242,9 @@ int main()
         break;    
     case 4:
         posl();
+        break;    
+    case 5:
+        matrix();
         break;
     default:
         break;
